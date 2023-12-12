@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-
-from shoe import Shoe
-
 import io
 import sys
+import pytest  # Add this import
+from shoe import Shoe
+
 
 class TestShoe:
     '''Shoe in shoe.py'''
@@ -15,13 +15,10 @@ class TestShoe:
         assert(stan_smith.size == 9)
 
     def test_requires_int_size(self):
-        '''prints "size must be an integer" if size is not an integer.'''
-        stan_smith = Shoe("Adidas", 9)
-        captured_out = io.StringIO()
-        sys.stdout = captured_out
+       '''raises TypeError with the message "size must be an integer" if size is not an integer.'''
+    stan_smith = Shoe("Adidas", 9)
+    with pytest.raises(TypeError, match="size must be an integer"):
         stan_smith.size = "not an integer"
-        sys.stdout = sys.__stdout__
-        assert captured_out.getvalue() == "size must be an integer\n"
 
     def test_can_cobble(self):
         '''says that the shoe has been repaired.'''
